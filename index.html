@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for HTML5 for Mac OS X version 5.2.0">
+    <title>
+      [DRAFT] HTTPS in Local Network Community Group Charter
+    </title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/base" type=
+    "text/css">
+    <style type="text/css">
+      body {
+        max-width: 60em;
+        margin: auto;
+      }
+      *:target {
+        background-color: yellow;
+      }
+      li {
+        margin-bottom: 9pt;
+      }
+      /* Note formatting taken from HTML5 spec */
+      .note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
+      .note em, .warning em, .note i, .warning i { font-style: normal; }
+      p.note, div.note { padding: 0.5em 2em; }
+      span.note { padding: 0 2em; }
+      .note p:first-child { margin-top: 0; }
+      .note p:last-child { margin-bottom: 0; }
+      .note:before { content: 'NOTE: '; }
+      .issue { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #fbe9e9; border-color: #e05252; }
+      .issue em, .warning em, .issue i, .warning i { font-style: normal; }
+      p.issue, div.issue { padding: 0.5em 2em; }
+      span.issue { padding: 0 2em; }
+      .issue p:first-child { margin-top: 0; }
+      .issue p:last-child { margin-bottom: 0; }
+      .issue:before { content: 'ISSUE: '; }
+    </style>
+  </head>
+  <body>
+    <h1>
+      [DRAFT] HTTPS in Local Network Community Group Charter
+    </h1>
+    <dl>
+      <dt>
+        This Charter:
+      </dt>
+      <dd>
+        <a href=
+        "https://httpslocal.github.io/cg-charter/">https://httpslocal.github.io/cg-charter/</a>
+      </dd>
+      <dt>
+        Start Date:
+      </dt>
+      <dd>
+        XX December 2016
+      </dd>
+      <dt>
+        Last Modified:
+      </dt>
+      <dd>
+        XX December 2016
+      </dd>
+    </dl>
+    <h2 id="goals">
+      Goals
+    </h2>
+    <p>
+      The <a href="https://www.w3.org/community/httpslocal/">HTTPS in Local
+      Network Community Group (CG)</a> explores the manner of secure
+      communication between browsers and server-capable devices in local
+      network such as set-top boxes, network attached storages, etc. We propose
+      that this Community Group clarify requirements for browsers and devices
+      in issuing valid certificates and establishment of HTTPS and WebSocket
+      connections over TLS and incubate relevant specifications of APIs and/or
+      network protocols.
+    </p>
+    <p>
+      This work has four primary purposes:
+    </p>
+    <ul>
+      <li>
+        <em>Improve security and privacy of communication between browsers and
+        server-capable devices.</em> It is anticipated that applying TLS to
+        HTTP and WebSocket connection in local network will prevent malicious
+        interception and spoofing, as well as in global internet. The
+        specifications will enable server-capable devices to use TLS
+        certificates which can be validated successfully by browsers without
+        manually adding self-signed root CA certificates, so that browsers in
+        the same local network could connect to the devices via HTTP and
+        WebSocket over TLS.
+      </li>
+      <li>
+        <em>Enable web applications in <a href=
+        "https://www.w3.org/TR/secure-contexts">secure contexts</a> to
+        communicate with server-capable devices in local network via <a href=
+        "https://xhr.spec.whatwg.org">XMLHttpRequest</a>, <a href=
+        "https://fetch.spec.whatwg.org">Fetch API</a>, and <a href=
+        "https://html.spec.whatwg.org/multipage/comms.html#network">WebSocket</a>.</em>
+        If such devices cannot establish HTTPS or WebSocket connection over TLS
+        with browsers, web applications in <a href=
+        "https://www.w3.org/TR/secure-contexts">secure contexts</a> are not
+        allowed to connect to them due to <a href=
+        "https://www.w3.org/TR/mixed-content/">mixed content</a>. The
+        specifications will mitigate such restriction by enabling TLS sessions
+        between browsers and devices in local network.
+      </li>
+      <li>
+        <em>Enable service discovery mechanisms to advertise existence of
+        TLS-enabled server-capable devices.</em> In local network, a device
+        identifier advertised by the service discovery may include either local
+        IP address (e.g. private IPv4 address and IPv6 link-local address). or
+        locally unique name (e.g. <code>foo.local</code>), however, such an
+        identifier may be much less appropriate for issuing certificates. The
+        specifications will provide a manner to issue suitable certificates for
+        such devices in secure and robust procedures.
+      </li>
+      <li>
+        <em>Encourage adoption and implementation of the specification by
+        browser vendors and device manufacturers.</em> The specifications
+        should allow browsers to connect to server-capable devices via TLS
+        without changing the current security model of web applications.
+      </li>
+    </ul>
+    <p>
+      Given wider support and adequate stability, we plan to migrate the
+      proposals generated in this Community Group to an appropriate standards
+      track, for example the <a href=
+      "https://tools.ietf.org/html/rfc2026#section-4">IETF Standards Track</a>
+      or a <a href="https://www.w3.org/Consortium/activities#Working">W3C
+      Working Group</a>, for further contributions and formal standardization.
+    </p>
+    <p>
+      Membership of the group is open to everybody. Upon joining the group,
+      participants agree to the terms of the <a href=
+      "https://www.w3.org/community/about/agreements/cla/">W3C Community
+      Contributor License Agreement (CLA)</a>.
+    </p>
+    <h2 id="background">
+      Background
+    </h2>
+    <p>
+      By tradition, diverse kinds of connected devices have been provided
+      browsers with web applications as their controller user interfaces via
+      plain HTTP connections. Since such a connection usually lacks encryption
+      and identity verification, the current web security model regards the
+      device's origin as insecure, which prevents web applications in <a href=
+      "https://www.w3.org/TR/secure-contexts">secure contexts</a> from
+      connecting to the devices in local network.
+    </p>
+    <p>
+      Therefore, it is necessary how to issue valid TLS certificates for the
+      devices in order to ensure security and privacy of their communication
+      channels and avoid <a href="https://www.w3.org/TR/mixed-content/">mixed
+      content</a>. Issuing certificates securely would require device
+      verification by the issuer and device authentication by users.
+      Coordination with service discovery mechanisms might also be important.
+    </p>
+    <h2 id="scope-of-work">
+      Scope of Work
+    </h2>
+    <p>
+      The following tasks are in scope for the work of the community group. The
+      group's scope are divided into two phases. In phase 1, the group will
+      focus on clarifying the network, functional, security and privacy
+      requirements, and exploring adoption of existing standards to meet the
+      requirements. If the group cannot find any existing standards which can
+      meet the requirements, the group will develop new supplementary standards
+      in phase 2.
+    </p>
+    <h3>
+      Phase 1
+    </h3>
+    <ol>
+      <li>Requirements for local network architecture, in either case that the
+      local network is completely isolated from the global network, or devices
+      in the local network are allowed to communicate with the external
+      servers, are in scope.
+      </li>
+      <li>Functional requirements for browsers and devices in issuing processes
+      of TLS certificates for devices such as generating Certificate Signing
+      Request (CSR), validating devices by a certificate issuer, with control
+      by web applications running on browsers in the same local network, are in
+      scope.
+      </li>
+      <li>Security and privacy requirements for browsers and devices in
+      issuing, reissuing and revoking TLS certificates for devices are in
+      scope, in terms of device authentication bybrowsers, host and domain name
+      management for devices, and device validation by a certificate issuer.
+      </li>
+      <li>Discussion on a privacy concern for device's host and domain name
+      resolution in local network is also in scope.
+      </li>
+      <li>Collecting typical use cases of communication with devices in local
+      network is also in scope, for the purpose of clarifying the above
+      requirements.
+      </li>
+      <li>Clarifying issues suggested by the above requirements and surveying
+      existing standards to be potential solutions for them are in scope.
+      </li>
+      <li>Gap analysis toward <a href=
+      "https://tools.ietf.org/html/draft-ietf-acme-acme-04">Automatic
+      Certificate Management Environment (ACME)</a> is also in scope.
+      </li>
+      <li>Gap analysis toward <a href="https://w3c.github.io/webauthn/">Web
+      Authentication (WebAuthn)</a> is also in scope.
+      </li>
+      <li>Use of wireless connections such as Bluetooth and NFC is also in
+      scope, in terms of device authentication and certificate issuing control
+      by browsers.
+      </li>
+    </ol>
+    <h3>
+      Phase 2
+    </h3>
+    <p>
+      The following specification may be developed in phase 2, <em>only if</em>
+      it is found that any existing standards cannot be adopted to meet the
+      requirements discussed in phase 1.
+    </p>
+    <ol>
+      <li>Specifications of a set of network protocols that allows devices in
+      local network to request a certificate issuer for device validation and
+      issuing, reissuing and revoking TLS certificates.
+      </li>
+      <li>Specifications of a set of network protocols and possibly APIs that
+      allows browsers to authenticate devices in the same local network, and
+      let the devices communicate with a certificate issuer in order to issue,
+      reissue and revoke valid TLS certificates.
+      </li>
+    </ol>
+    <h2 id="out-of-scope">
+      Out of Scope
+    </h2>
+    <p>
+      For this community group, the following tasks are out of scope.
+    </p>
+    <ul>
+      <li>Extending interface definitions of <a href=
+      "https://xhr.spec.whatwg.org">XMLHttpRequest</a>, <a href=
+      "https://fetch.spec.whatwg.org">Fetch API</a>, and <a href=
+      "https://html.spec.whatwg.org/multipage/comms.html#network">WebSocket</a>
+      are out of scope.
+      </li>
+      <li>Developing specifications of Browser API for service discovery such
+      as <a href="https://www.w3.org/TR/discovery-api/">Network Service
+      Discovery</a> is out of scope. The group assumes that browser's user
+      interface provides users with service discovery.
+      </li>
+      <li>Investigating use of self-signed root CA certificates without
+      appropriate validation is out of scope.
+      </li>
+    </ul>
+    <h2 id="deliverables">
+      Deliverables
+    </h2>
+    <p>
+      <strong>The group will only produce Specifications listed in this section
+      at most</strong>.
+    </p>
+    <p>
+      The Community Group will deliver specifications designed to meet
+      functional and security requirements of adopting TLS for communication
+      between browsers and server-capable devices, which will be discussed in
+      this group, <em>only if</em> the group cannot find any existing standards
+      to meet the requirements.
+    </p>
+    <ol>
+      <li>The specification for a device and a certificate issuer that
+      describes how the device send a CSR to the issuer, the issuer validates
+      the device, and then the issuer provides the device with a valid TLS
+      certificate.
+      </li>
+      <li>The specification for a browser and a device that describes how a
+      browser authenticates a device in the same local network, let the device
+      request a certificate issuer to issue, reissue and revoke a valid TLS
+      certificate.
+      </li>
+    </ol>
+    <p>
+      To add any additional specifications, this Charter must be amended by the
+      process described in the <a href="#charter-change">Amendments to the
+      Charter</a> section. All deliverables for which the CLA <a href=
+      "https://www.w3.org/community/about/agreements/cla/#id3">Patents</a>
+      section applies must be designated as such here.
+    </p>
+    <h3 id="non-normative-reports">
+      Non-Normative Reports
+    </h3>
+    <p>
+      The group may produce other Community Group Reports within the scope of
+      this charter but that are not Specifications, for instance use cases,
+      requirements, or white papers.
+    </p>
+    <h2 id="liaisons">
+      Dependencies or Liaisons
+    </h2>
+    <p>
+      It is anticipated that the group will collaborate with appropriate W3C
+      Working Groups, Interest Groups and Community Group in order to
+      transition specification proposals to the Recommendation Track.
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.w3.org/community/webscreens/">Second Screen
+        Community Group</a>
+      </li>
+      <li>
+        <a href="https://www.w3.org/2011/webappsec/">Web Application Security
+        Working Group</a>
+      </li>
+      <li>
+        <a href="https://www.w3.org/Webauthn/">Web Authentication Working
+        Group</a>
+      </li>
+      <li>
+        <a href="https://www.w3.org/Privacy/">Privacy Interest Group</a>
+      </li>
+      <li>
+        <a href="https://www.w3.org/WoT/IG/">Web of Things Interest Group</a>
+      </li>
+    </ul>
+    <h2 id="process">
+      Community and Business Group Process
+    </h2>
+    <p>
+      The group operates under the <a href=
+      "https://www.w3.org/community/about/agreements/">Community and Business
+      Group Process</a>. Terms in this Charter that conflict with those of the
+      Community and Business Group Process are void.
+    </p>
+    <p>
+      As with other Community Groups, W3C seeks organizational licensing
+      commitments under the <a href=
+      'http://www.w3.org/community/about/agreements/cla/'>W3C Community
+      Contributor License Agreement (CLA)</a>. When people request to
+      participate without representing their organization's legal interests,
+      W3C will in general approve those requests for this group with the
+      following understanding: W3C will seek and expect an organizational
+      commitment under the CLA starting with the individual's first request to
+      make a contribution to a group <a href="#deliverables">Deliverable</a>.
+      The section on <a href="#contrib">Contribution Mechanics</a> describes
+      how W3C expects to monitor these contribution requests.
+    </p>
+    <h2 id="worklimit">
+      Work Limited to Charter Scope
+    </h2>
+    <p>
+      The group will not publish Specifications on topics other than those
+      listed under <a href="#specifications">Specifications</a> above. See
+      below for <a href="#charter-change">how to modify the charter</a>.
+    </p>
+    <h2 id="contrib">
+      Contribution Mechanics
+    </h2>
+    <p>
+      Substantive Contributions to Specifications can only be made by Community
+      Group Participants who have agreed to the <a href=
+      "http://www.w3.org/community/about/agreements/cla/">W3C Community
+      Contributor License Agreement (CLA)</a>.
+    </p>
+    <p>
+      Specifications created in the Community Group must use the <a href=
+      "http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">
+      W3C Software and Document License</a>. All other documents produced by
+      the group should use that License where possible.
+    </p>
+    <p>
+      Community Group participants agree to make all contributions in the
+      GitHub repo the group is using for the particular document. This may be
+      in the form of a pull request (preferred), by raising an issue, or by
+      adding a comment to an existing issue.
+    </p>
+    <p>
+      All Github repositories attached to the Community Group must contain a
+      copy of the <a href=
+      "https://github.com/w3c/licenses/blob/master/CG-CONTRIBUTING.md">CONTRIBUTING</a>
+      and <a href=
+      "https://github.com/w3c/licenses/blob/master/CG-LICENSE.md">LICENSE</a>
+      files.
+    </p>
+    <h2 id="transparency">
+      Transparency
+    </h2>
+    <p>
+      The group will conduct all of its technical work in public. All technical
+      work will occur in its GitHub repositories (and not in mailing list
+      discussions). This is to ensure contributions can be tracked through a
+      software tool.
+    </p>
+    <p>
+      Meetings may be restricted to Community Group participants, but a public
+      summary or minutes must be posted to the group's public mailing list and
+      <a href=
+      "https://www.w3.org/community/httpslocal/wiki/Main_Page">Wiki</a>.
+    </p>
+    <h2 id="decision">
+      Decision Process
+    </h2>
+    <p>
+      This group will seek to make decisions where there is consensus. Groups
+      are free to decide how to make decisions (e.g. Participants who have
+      earned Committer status for a history of useful contributions assess
+      consensus, or the Chair assesses consensus, or where consensus isn't
+      clear there is a Call for Consensus [CfC] to allow multi-day online
+      feedback for a proposed course of action). It is expected that
+      participants can earn Committer status through a history of valuable
+      contributions as is common in open source projects. After discussion and
+      due consideration of different opinions, a decision should be publicly
+      recorded (where GitHub is used as the resolution of an Issue).
+    </p>
+    <p>
+      If substantial disagreement remains (e.g. the group is divided) and the
+      group needs to decide an Issue in order to continue to make progress, the
+      Committers will choose an alternative that had substantial support (with
+      a vote of Committers if necessary). Individuals who disagree with the
+      choice are strongly encouraged to take ownership of their objection by
+      taking ownership of an alternative fork. This is explicitly allowed (and
+      preferred to blocking progress) with a goal of letting implementation
+      experience inform which spec is ultimately chosen by the group to move
+      ahead with.
+    </p>
+    <p>
+      Any decisions reached at any meeting are tentative and should be recorded
+      in a GitHub Issue for groups that use GitHub and otherwise on the group's
+      public mail list. Any group participant may object to a decision reached
+      at an online or in-person meeting within 10 days of publication of the
+      decision provided that they include clear technical reasons for their
+      objection. The Chairs will facilitate discussion to try to resolve the
+      objection according to the <a href="#decision">decision process</a>.
+    </p>
+    <p>
+      It is the Chairs' responsibility to ensure that the decision process is
+      fair, respects the consensus of the CG, and does not unreasonably favour
+      or discriminate against any group participant or their employer.
+    </p>
+    <h2 id="chairs">
+      Chair Selection
+    </h2>
+    <p>
+      Participants in this group choose their Chair(s) and can replace their
+      Chair(s) at any time using whatever means they prefer. However, if 5
+      participants, no two from the same organisation, call for an election,
+      the group must use the following process to replace any current Chair(s)
+      with a new Chair, consulting the Community Development Lead on election
+      operations.
+    </p>
+    <ol>
+      <li>Participants announce their candidacies. Participants have 14 days to
+      announce their candidacies, but this period ends as soon as all
+      participants have announced their intentions. If there is only one
+      candidate, that person becomes the Chair. If there are two or more
+      candidates, there is a vote. Otherwise, nothing changes.
+      </li>
+      <li>Participants vote. Participants have 21 days to vote for a single
+      candidate, but this period ends as soon as all participants have voted.
+      The individual who receives the most votes, no two from the same
+      organisation, is elected chair. In case of a tie, a process requested
+      from the Community Development Lead is used to break the tie. An elected
+      Chair may appoint co-Chairs.
+      </li>
+    </ol>
+    <p>
+      Participants dissatisfied with the outcome of an election may ask the
+      Community Development Lead to intervene. The Community Development Lead,
+      after evaluating the election, may take any action including no action.
+    </p>
+    <h2 id="charter-change">
+      Amendments to this Charter
+    </h2>
+    <p>
+      The group can decide to work on a proposed amended charter, editing the
+      text using the <a href="#decision">Decision Process</a> described above.
+      The decision on whether to adopt the amended charter is made by
+      conducting a 30-day vote on the proposed new charter. The new charter, if
+      approved, takes effect on either the proposed date in the charter itself,
+      or 7 days after the result of the election is announced, whichever is
+      later. A new charter must receive 2/3 of the votes cast in the approval
+      vote to pass. The group may make simple corrections to the charter such
+      as deliverable dates by the simpler group decision process rather than
+      this charter amendment process. The group will use the amendment process
+      for any substantive changes to the goals, scope, deliverables, decision
+      process or rules for amending the charter.
+    </p>
+  </body>
+</html>
